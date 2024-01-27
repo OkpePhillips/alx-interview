@@ -19,9 +19,11 @@ def calculate_metrics(lines):
             total_size += int(file_size)
             status_code = int(status_code)
             if status_code in {200, 301, 400, 401, 403, 404, 405, 500}:
-                status_counts[status_code] = status_counts.get(status_code, 0) + 1
+                status_counts[status_code] = status_counts.get(status_code,
+                                                               0) + 1
 
     return total_size, status_counts
+
 
 def print_data(total_size, status_counts):
     """
@@ -30,6 +32,7 @@ def print_data(total_size, status_counts):
     print(f'File size: {total_size}')
     for status_code in sorted(status_counts):
         print(f'{status_code}: {status_counts[status_code]}')
+
 
 def handle_interrupt(signal, frame):
     """
@@ -43,7 +46,7 @@ if __name__ == "__main__":
     lines = []
     try:
         signal.signal(signal.SIGINT, handle_interrupt)
-        
+
         i = 1
         for line in sys.stdin:
             lines.append(line.strip())
