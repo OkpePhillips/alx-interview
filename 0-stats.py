@@ -42,6 +42,7 @@ def handle_interrupt(signal, frame):
     print_data(total_size, status_counts)
     sys.exit(0)
 
+
 if __name__ == "__main__":
     lines = []
     try:
