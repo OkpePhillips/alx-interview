@@ -3,7 +3,11 @@
 Rotating a 2D matrix by 90 degrees
 """
 
+
 def rotate_2d_matrix(matrix):
+    """
+    Function to rotate a matrix by 90 degrees
+    """
     n = len(matrix)
 
     # Transposing the matrix
