@@ -17,14 +17,14 @@ function getCharacters (movieId) {
             if (error) {
               reject(error);
             } else if (response.statusCode !== 200) {
-              reject(`Status: ${response.statusCode}`);
-              } else {
-                const character = JSON.parse(body);
-                resolve(character.name);
-                }
+              reject (`Status: ${response.statusCode}`);
+            } else {
+            const character = JSON.parse(body);
+              resolve(character.name);
+            }
           });
         });
-      });	
+      });
       Promise.all(characterPromises)
         .then(characterNames => {
           characterNames.forEach(name => {
@@ -34,14 +34,14 @@ function getCharacters (movieId) {
         .catch(error => {
           console.error('Error:', error);
         });
-      }
+    }
   });
 }
 
 const movieId = process.argv[2];
 
 if (!movieId) {
-    console.error('Please provide a movie ID as an argument.');
+  console.error('Please provide a movie ID as an argument.');
 } else {
-    getCharacters(movieId);
+  getCharacters(movieId);
 }
