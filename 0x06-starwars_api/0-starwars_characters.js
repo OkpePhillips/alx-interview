@@ -9,21 +9,21 @@ function getCharacters (movieId) {
       console.error('Error:', error);
     } else if (response.statusCode !== 200) {
       console.error('Status:', response.statusCode);
-      } else {
+    } else {
       const film = JSON.parse(body);
       const characterPromises = film.characters.map(characterUrl => {
-         return new Promise((resolve, reject) => {
-           request(characterUrl, (error, response, body) => {
-             if (error) {
-               reject(error);
-             } else if (response.statusCode !== 200) {
-               reject(`Status: ${response.statusCode}`);
-               } else {
-                 const character = JSON.parse(body);
-                 resolve(character.name);
-                 }
-           });
-         });
+        return new Promise((resolve, reject) => {
+          request(characterUrl, (error, response, body) => {
+            if (error) {
+              reject(error);
+            } else if (response.statusCode !== 200) {
+              reject(`Status: ${response.statusCode}`);
+              } else {
+                const character = JSON.parse(body);
+                resolve(character.name);
+                }
+          });
+        });
       });	
       Promise.all(characterPromises)
         .then(characterNames => {
