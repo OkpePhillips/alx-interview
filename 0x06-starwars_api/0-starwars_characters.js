@@ -1,8 +1,7 @@
 #!/usr/bin/node
 const request = require('request');
 
-
-function getCharacters(movieId) {
+function getCharacters (movieId) {
   const url = `https://swapi.dev/api/films/${movieId}/`;
 
   request(url, (error, response, body) => {
@@ -11,20 +10,31 @@ function getCharacters(movieId) {
     } else if (response.statusCode !== 200) {
       console.error('Status:', response.statusCode);
       } else {
-        const film = JSON.parse(body);
-        film.characters.forEach((characterUrl) => {
-          request(characterUrl, (error, response, body) => {
-            if (error) {
-              console.error('Error:', error);
-            } else if (response.statusCode !== 200) {
-              console.error('Status:', response.statusCode);
-              } else {
-                const character = JSON.parse(body);
-                console.log(character.name);
-                }
+      const film = JSON.parse(body);
+      const characterPromises = film.characters.map(characterUrl => {
+         return new Promise((resolve, reject) => {
+           request(characterUrl, (error, response, body) => {
+             if (error) {
+               reject(error);
+             } else if (response.statusCode !== 200) {
+               reject(`Status: ${response.statusCode}`);
+               } else {
+                 const character = JSON.parse(body);
+                 resolve(character.name);
+                 }
+           });
+         });
+      });	
+      Promise.all(characterPromises)
+        .then(characterNames => {
+          characterNames.forEach(name => {
+            console.log(name);
           });
-      });
-    }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
   });
 }
 
