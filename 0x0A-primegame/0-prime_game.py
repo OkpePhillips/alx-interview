@@ -19,18 +19,24 @@ def isWinner(x, nums):
     Functio to return the winner in the game depending on
     who won the most round
     """
+    # Pre-calculate primes up to 10000 (constraint-based optimization)
+    primes = [2]
+    for num in range(3, 10001, 2):  # Check only odd numbers
+        if is_prime(num):
+            primes.append(num)
+
     maria_wins = 0
     ben_wins = 0
 
     for _ in range(x):
         # Find the first prime number in the list
-        for num in nums:
-            if is_prime(num):
-                nums = [n for n in nums if n % num != 0]
+        for prime in primes:
+            if prime in nums:
+                nums = [n for n in nums if n % prime != 0]
                 break
 
         # Check if either player can make a move
-        if not any(is_prime(num) for num in nums):
+        if not any(num in primes for num in nums):
             # Ben wins if Maria cannot make a move
             ben_wins += 1
         else:
