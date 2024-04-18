@@ -1,3 +1,3 @@
 # ALX-INTERVIEW PROJECTS
 
-These projects aim to make the student acquantied with various questions for interview
+These projects aim to make the student familiar with various software engineering interview questions and how to approach them.
