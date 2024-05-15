@@ -36,11 +36,15 @@ def isWinner(x, nums):
     winners = {"Maria": 0, "Ben": 0}
 
     for n in nums:
-        primes = sieve_of_eratosthenes(n)
-        if len(primes) % 2 == 0:
+        if n <= 1:
+            # Maria cannot make a move, so Ben wins
             winners["Ben"] += 1
         else:
-            winners["Maria"] += 1
+            primes = sieve_of_eratosthenes(n)
+            if len(primes) % 2 == 0:
+                winners["Ben"] += 1
+            else:
+                winners["Maria"] += 1
 
     if winners["Maria"] > winners["Ben"]:
         return "Maria"
